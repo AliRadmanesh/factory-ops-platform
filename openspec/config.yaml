@@ -1,0 +1,44 @@
+schema: spec-driven
+
+context: |
+  Project: IPI-Packers — Manufacturing Operations Platform
+  A web-first operations management platform for specialty industrial manufacturers
+  (inflatable packers, downhole tools, geotechnical equipment).
+
+  Tech stack:
+  - Next.js 16 (App Router)
+  - TypeScript 5
+  - Tailwind CSS 4
+  - Supabase (@supabase/supabase-js ^2) — PostgreSQL, Auth, Realtime, PostgREST
+  - serwist + @serwist/next — PWA / service worker
+  - Vercel — hosting
+
+  Architecture:
+  - Single Next.js app, two route groups: app/(operator) and app/(dashboard)
+  - Shared lib/supabase/ and lib/types/ across both
+  - Operator UI: touch-optimized PWA (min 44px targets, fullscreen standalone)
+  - Dashboard UI: desktop-first, responsive to tablet/mobile
+  - Realtime via Supabase websockets on job_logs table (dashboard only)
+
+  Data model tables: sections, operators, work_orders, job_logs, tasks, task_completions
+
+  Target devices:
+  - Operators: iOS Safari (iPad/iPhone) + Android Chrome (tablet/phone) — installed as PWA
+  - Managers: Desktop browser primary, tablet/mobile secondary
+
+  Users:
+  - Operator: factory floor worker, may wear gloves, non-technical, zero training required
+  - Manager: senior staff, monitors live production from desktop
+
+rules:
+  proposal:
+    - "DEPLOY-FIRST MANDATE: Every implementation plan must follow this sequence: (1) Bootstrap bare-minimum local dev — Next.js boots, Tailwind loads, Supabase connected, env vars configured. (2) Deploy that skeleton to Vercel + confirm Supabase live with UptimeRobot health check. (3) ONLY THEN build features. This prevents end-of-project deployment surprises."
+    - Separate infra/deploy tasks from feature-building tasks — make the boundary explicit
+    - Reference PRD priority tiers (P0 → P1 → P2) when scoping work
+    - Always include a Non-goals section
+  tasks:
+    - "First task group must always be: local dev setup + Vercel deploy skeleton + end-to-end verify. No feature task comes before this group is done."
+    - Mark each task with PRD priority (P0/P1/P2) where applicable
+    - Each task must be independently completable in 2-4 hours max
+    - Include a concrete verification step for each milestone
+    - Infra tasks (Supabase schema, seed data, env vars) precede UI tasks that depend on them
