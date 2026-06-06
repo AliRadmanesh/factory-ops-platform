@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getSession } from "@/lib/session";
 import { supabase } from "@/lib/supabase/client";
-import type { Operator } from "@/lib/types";
+type OperatorListItem = Pick<import("@/lib/types").Operator, "id" | "name" | "section_id" | "is_active">;
 
 export default function OperatorSelectionPage() {
   const router = useRouter();
-  const [operators, setOperators] = useState<Operator[]>([]);
+  const [operators, setOperators] = useState<OperatorListItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
