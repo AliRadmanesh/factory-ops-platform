@@ -19,7 +19,7 @@ export default function OperatorSelectionPage() {
     }
     supabase
       .from("operators")
-      .select("*")
+      .select("id, name, section_id, is_active")
       .eq("is_active", true)
       .order("name")
       .then(({ data }) => {
