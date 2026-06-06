@@ -1,10 +1,10 @@
 ## 1. Infra & Deploy Foundation — GATE (no feature work until this group is verified complete)
 
-- [ ] 1.1 Init Next.js 16 project with TypeScript 5 and Tailwind 4 (`npx create-next-app@latest`) — verify `npm run dev` starts clean at localhost:3000 and a Tailwind utility class renders correctly
-- [ ] 1.2 Create Supabase project — run all 6 SQL table migrations (sections, operators, work_orders, job_logs, tasks, task_completions) in Supabase SQL editor — verify all tables visible in table editor
-- [ ] 1.3 Create `.env.local` with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` — add `lib/supabase/client.ts` (browser client) — verify a `SELECT * FROM sections` query returns data locally
-- [ ] 1.4 Install `serwist` + `@serwist/next` — create `sw.ts` entry file — configure `next.config.ts` with `withSerwist` — verify `npm run build` completes and `public/sw.js` is generated
-- [ ] 1.5 Create `public/manifest.json` (`display: standalone`, `start_url: /`, `theme_color: #0f172a`) — add placeholder icon files at `public/icons/192.png`, `512.png`, `apple-touch-icon.png` — add manifest link and iOS meta tags to root `app/layout.tsx`
+- [x] 1.1 Init Next.js 16 project with TypeScript 5 and Tailwind 4 (`npx create-next-app@latest`) — verify `npm run dev` starts clean at localhost:3000 and a Tailwind utility class renders correctly
+- [x] 1.2 Create Supabase project — run all 6 SQL table migrations (sections, operators, work_orders, job_logs, tasks, task_completions) in Supabase SQL editor — verify all tables visible in table editor
+- [x] 1.3 Create `.env.local` with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` — add `lib/supabase/client.ts` (browser client) — verify a `SELECT * FROM sections` query returns data locally
+- [x] 1.4 Install `serwist` + `@serwist/next` — create `sw.ts` entry file — configure `next.config.ts` with `withSerwist` — verify `npm run build` completes and `public/sw.js` is generated
+- [x] 1.5 Create `public/manifest.json` (`display: standalone`, `start_url: /`, `theme_color: #0f172a`) — add placeholder icon files at `public/icons/192.png`, `512.png`, `apple-touch-icon.png` — add manifest link and iOS meta tags to root `app/layout.tsx`
 - [ ] 1.6 Push project to GitHub — import to Vercel — set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel environment variables — trigger deploy — verify Vercel build passes
 - [ ] 1.7 Set up UptimeRobot HTTP monitor on `https://<project>.supabase.co/health` with 5-minute interval — verify monitor shows "Up"
 - [ ] 1.8 **END-TO-END VERIFY GATE**: Open Vercel production URL in browser — confirm page loads (HTTP 200) — confirm a Supabase query (e.g., sections list) returns data in production — only proceed to Group 2 after this passes
