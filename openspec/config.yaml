@@ -1,9 +1,8 @@
 schema: spec-driven
 
 context: |
-  Project: IPI-Packers — Manufacturing Operations Platform
-  A web-first operations management platform for specialty industrial manufacturers
-  (inflatable packers, downhole tools, geotechnical equipment).
+  Project: FloorOps — Manufacturing Operations Platform
+  A web-first operations management platform for small and mid-size manufacturers.
 
   Tech stack:
   - Next.js 16 (App Router)

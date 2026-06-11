@@ -66,13 +66,15 @@ export default async function DashboardPage() {
   const { activeJobs, stats, sectionProgress } = await getDashboardData();
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Production Overview</h1>
-        <p className="mt-1 text-sm text-slate-400">
+    <div className="p-6 lg:p-8">
+      <div className="mb-8 flex items-end justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">FloorOps</p>
+          <h1 className="mt-1 text-2xl font-bold text-white">Production Overview</h1>
+        </div>
+        <p className="text-sm text-slate-500">
           {new Date().toLocaleDateString("en-AU", {
             weekday: "long",
-            year: "numeric",
             month: "long",
             day: "numeric",
           })}
@@ -82,11 +84,15 @@ export default async function DashboardPage() {
       <StatsBar stats={stats} />
 
       <div className="mt-8">
-        <JobsTable initialJobs={activeJobs as never[]} />
+        <JobsTable
+          initialJobs={activeJobs as never[]}
+          supabaseUrl={process.env.SUPABASE_URL!}
+          supabaseAnonKey={process.env.SUPABASE_ANON_KEY!}
+        />
       </div>
 
-      <div className="mt-8">
-        <h2 className="mb-4 text-sm font-semibold uppercase tracking-widest text-slate-400">
+      <div className="mt-10">
+        <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
           Section Task Progress
         </h2>
         <SectionProgress sections={sectionProgress} />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 interface JobRow {
   id: string;
@@ -19,18 +19,26 @@ function elapsed(start: string) {
   return h > 0 ? `${h}h ${m}m` : `${m}m`;
 }
 
-export default function JobsTable({ initialJobs }: { initialJobs: JobRow[] }) {
+export default function JobsTable({
+  initialJobs,
+  supabaseUrl,
+  supabaseAnonKey,
+}: {
+  initialJobs: JobRow[];
+  supabaseUrl: string;
+  supabaseAnonKey: string;
+}) {
   const [jobs, setJobs] = useState<JobRow[]>(initialJobs);
   const [, tick] = useState(0);
 
-  // Tick elapsed time every minute
   useEffect(() => {
     const t = setInterval(() => tick((n) => n + 1), 60000);
     return () => clearInterval(t);
   }, []);
 
-  // Realtime subscription
   useEffect(() => {
+    const supabase = createSupabaseBrowserClient(supabaseUrl, supabaseAnonKey);
+
     const channel = supabase
       .channel("job_logs_realtime")
       .on(
@@ -53,11 +61,11 @@ export default function JobsTable({ initialJobs }: { initialJobs: JobRow[] }) {
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
-  }, []);
+  }, [supabaseUrl, supabaseAnonKey]);
 
   return (
     <div>
-      <h2 className="mb-4 text-sm font-semibold uppercase tracking-widest text-slate-400">
+      <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
         Active Jobs
       </h2>
 
@@ -83,7 +91,7 @@ export default function JobsTable({ initialJobs }: { initialJobs: JobRow[] }) {
                 {jobs.map((job, i) => (
                   <tr
                     key={job.id}
-                    className={i < jobs.length - 1 ? "border-b border-slate-800" : ""}
+                    className={`transition-colors hover:bg-slate-800/60 ${i < jobs.length - 1 ? "border-b border-slate-800" : ""}`}
                   >
                     <td className="px-5 py-4 font-medium text-white">
                       {job.operators?.name ?? "—"}

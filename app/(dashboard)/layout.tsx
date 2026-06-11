@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "IPI Packers — Dashboard",
+  title: "FloorOps — Dashboard",
 };
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <aside className="flex w-56 shrink-0 flex-col border-r border-slate-800 bg-slate-900">
         <div className="px-6 py-6">
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
-            IPI Packers
+            FloorOps
           </p>
           <p className="mt-0.5 text-sm font-bold text-white">Operations</p>
         </div>

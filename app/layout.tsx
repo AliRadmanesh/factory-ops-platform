@@ -2,13 +2,13 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "IPI Packers",
+  title: "FloorOps",
   description: "Manufacturing Operations Platform",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "IPI Packers",
+    title: "FloorOps",
   },
 };
 

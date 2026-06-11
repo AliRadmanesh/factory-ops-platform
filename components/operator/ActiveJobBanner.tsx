@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getSession } from "@/lib/session";
-import { supabase } from "@/lib/supabase/client";
+import { getActiveJob } from "@/app/actions/data";
 import type { JobLog, WorkOrder } from "@/lib/types";
 
 type ActiveJobRow = JobLog & { work_orders: WorkOrder };
@@ -14,14 +14,7 @@ export default function ActiveJobBanner() {
   useEffect(() => {
     const session = getSession();
     if (!session) return;
-
-    supabase
-      .from("job_logs")
-      .select("*, work_orders(*)")
-      .eq("operator_id", session.id)
-      .eq("status", "active")
-      .maybeSingle()
-      .then(({ data }) => setJob(data));
+    getActiveJob(session.id).then((data) => setJob(data));
   }, []);
 
   if (!job) return null;

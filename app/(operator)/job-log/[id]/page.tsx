@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { getSession } from "@/lib/session";
-import { supabase } from "@/lib/supabase/client";
+import { getJobById } from "@/app/actions/data";
 import { updatePartsCount, endJob } from "@/app/actions/jobs";
 import type { JobLog, WorkOrder } from "@/lib/types";
 
@@ -31,16 +31,11 @@ export default function ActiveJobPage() {
     const session = getSession();
     if (!session) { router.replace("/"); return; }
 
-    supabase
-      .from("job_logs")
-      .select("*, work_orders(*)")
-      .eq("id", id)
-      .single()
-      .then(({ data }) => {
-        if (!data) { router.replace("/job-log"); return; }
-        setJob(data);
-        setParts(data.parts_completed);
-      });
+    getJobById(id).then((data) => {
+      if (!data) { router.replace("/job-log"); return; }
+      setJob(data);
+      setParts(data.parts_completed);
+    });
   }, [id, router]);
 
   useEffect(() => {
@@ -94,14 +89,12 @@ export default function ActiveJobPage() {
   return (
     <>
       <div className="flex flex-col gap-6 px-5 py-6">
-        {/* Job info */}
         <div>
           <span className="text-xs font-semibold text-blue-400">{job.work_orders.job_number}</span>
           <h1 className="mt-0.5 text-xl font-bold text-white">{job.work_orders.product_name}</h1>
           <p className="mt-1 text-sm text-slate-400">{job.work_orders.product_type} · Started {elapsed} ago</p>
         </div>
 
-        {/* Parts counter */}
         <div className="flex flex-col items-center gap-4 rounded-2xl bg-slate-800 py-8">
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Parts Completed</p>
           <span className="text-7xl font-bold tabular-nums text-white">{parts}</span>
@@ -122,7 +115,6 @@ export default function ActiveJobPage() {
           </div>
         </div>
 
-        {/* End job */}
         <button
           onClick={() => setShowEndSheet(true)}
           className="w-full rounded-xl border border-red-800 py-4 font-semibold text-red-400 active:bg-red-900/20"
@@ -131,7 +123,6 @@ export default function ActiveJobPage() {
         </button>
       </div>
 
-      {/* End job confirmation sheet */}
       {showEndSheet && (
         <div className="fixed inset-0 z-50 flex items-end bg-black/60">
           <div className="w-full rounded-t-2xl bg-slate-900 p-6 pb-safe">

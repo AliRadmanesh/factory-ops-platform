@@ -1,6 +1,6 @@
 ## Why
 
-Specialty industrial manufacturers (inflatable packers, downhole tools, geotechnical equipment) lack purpose-built digital tooling for factory floor operations — operators track jobs on paper or in generic tools that don't fit glove-friendly tablet workflows. This project delivers a web-first platform to replace that gap, demonstrating real-time production visibility and ISO 9001-traceable task compliance in a single deployable application.
+Small and mid-size manufacturers lack purpose-built digital tooling for factory floor operations — operators track jobs on paper or in generic tools that don't fit glove-friendly tablet workflows. This project delivers a web-first platform to replace that gap, demonstrating real-time production visibility and traceable task compliance in a single deployable application.
 
 ## What Changes
 
@@ -27,7 +27,7 @@ This is a greenfield build — no existing codebase to modify.
 - `task-checklists`: Per-section task list (daily + per-job frequency). Tap to complete with timestamp. Daily tasks auto-reset at midnight.
 - `manager-dashboard`: Real-time production overview: stats bar (active jobs, operators, parts today), active jobs table, per-section task completion progress bars. Supabase Realtime subscription — updates within 3 seconds of operator action.
 - `pwa-support`: PWA manifest (`display: standalone`), serwist service worker, iOS/Android meta tags. Enables fullscreen home-screen install on both platforms.
-- `seed-data`: Realistic seed data — sections (Rubber Lab, Vulcanization, Assembly, Testing & QC, Shipping), 8–10 operators, 8–10 industrial work orders, 3–5 tasks per section.
+- `seed-data`: Realistic seed data — sections (Raw Materials, Fabrication, Assembly, Quality Control, Dispatch), 8–10 operators, 8–10 work orders, 3–5 tasks per section.
 
 ### Modified Capabilities
 

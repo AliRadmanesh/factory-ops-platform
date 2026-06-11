@@ -88,15 +88,16 @@ Greenfield — no migration needed. Deployment sequence:
 1. `npx create-next-app@latest` → push to GitHub
 2. Import GitHub repo to Vercel → set env vars → verify build
 3. Create Supabase project → run SQL migrations in Supabase SQL editor → verify tables
-4. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel env vars
+4. Set `SUPABASE_URL` and `SUPABASE_ANON_KEY` in Vercel env vars
 5. Redeploy → confirm Supabase queries work in production
 6. Configure UptimeRobot on `https://<supabase-project>.supabase.co/health`
 7. Begin feature implementation
 
 Rollback: Not applicable for greenfield. Each feature can be reverted via git revert.
 
-## Open Questions
+## Resolved Decisions
 
-- App name to replace `[APP_NAME]` in manifest.json and layout metadata — use "IPI Packers" or a custom brand name?
-- PIN hashing: use `bcryptjs` client-side or hash server-side via Server Action? (Recommendation: Server Action to avoid exposing hash logic in client bundle)
-- Supabase RLS for demo: leave disabled or add permissive read policy? (Recommendation: add `SELECT` policy for `anon` role on all tables for public dashboard demo)
+- App name: **FloorOps** — set in manifest.json and layout metadata
+- PIN hashing: server-side via Server Action using `bcryptjs` — hash never exposed to client
+- Supabase RLS: enable on all tables with permissive `SELECT` policy for `anon` role — mutations blocked by default
+- Env vars: both `SUPABASE_URL` and `SUPABASE_ANON_KEY` server-side only (no `NEXT_PUBLIC_` prefix) — passed as props to `JobsTable` for Realtime only

@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { validatePin } from "@/app/actions/auth";
+import { getOperatorById } from "@/app/actions/data";
 import { saveSession } from "@/lib/session";
-import { supabase } from "@/lib/supabase/client";
 
 function PinEntry() {
   const router = useRouter();
@@ -20,16 +20,11 @@ function PinEntry() {
 
   useEffect(() => {
     if (!operatorId) { router.replace("/"); return; }
-    supabase
-      .from("operators")
-      .select("name, section_id")
-      .eq("id", operatorId)
-      .single()
-      .then(({ data }) => {
-        if (!data) { router.replace("/"); return; }
-        setOperatorName(data.name);
-        setSectionId(data.section_id);
-      });
+    getOperatorById(operatorId).then((data) => {
+      if (!data) { router.replace("/"); return; }
+      setOperatorName(data.name);
+      setSectionId(data.section_id);
+    });
   }, [operatorId, router]);
 
   const handleDigit = (d: string) => {
@@ -90,21 +85,18 @@ function PinEntry() {
             {k}
           </button>
         ))}
-        {/* backspace */}
         <button
           onPointerDown={handleBackspace}
           className="flex h-16 items-center justify-center rounded-xl bg-slate-800 text-xl text-slate-400 active:bg-slate-700"
         >
           ⌫
         </button>
-        {/* 0 */}
         <button
           onPointerDown={() => handleDigit("0")}
           className="flex h-16 items-center justify-center rounded-xl bg-slate-800 text-2xl font-semibold text-white active:bg-slate-700"
         >
           0
         </button>
-        {/* submit */}
         <button
           onPointerDown={() => handleSubmit()}
           disabled={pin.length !== 4 || submitting}
@@ -116,7 +108,7 @@ function PinEntry() {
 
       <button
         onClick={() => router.replace("/")}
-        className="text-sm text-slate-500 underline-offset-2 active:text-slate-300"
+        className="px-6 py-3 text-sm text-slate-500 active:text-slate-300"
       >
         Back
       </button>

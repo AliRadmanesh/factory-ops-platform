@@ -4,7 +4,7 @@ import OfflineBanner from "@/components/operator/OfflineBanner";
 import OperatorNav from "@/components/operator/OperatorNav";
 
 export const metadata: Metadata = {
-  title: "IPI Packers — Operator",
+  title: "FloorOps — Operator",
 };
 
 export default function OperatorLayout({ children }: { children: React.ReactNode }) {

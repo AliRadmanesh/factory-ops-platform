@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getSession } from "@/lib/session";
-import { supabase } from "@/lib/supabase/client";
+import { getActiveOperators } from "@/app/actions/data";
+
 type OperatorListItem = Pick<import("@/lib/types").Operator, "id" | "name" | "section_id" | "is_active">;
 
 export default function OperatorSelectionPage() {
@@ -17,15 +18,10 @@ export default function OperatorSelectionPage() {
       router.replace("/home");
       return;
     }
-    supabase
-      .from("operators")
-      .select("id, name, section_id, is_active")
-      .eq("is_active", true)
-      .order("name")
-      .then(({ data }) => {
-        setOperators(data ?? []);
-        setLoading(false);
-      });
+    getActiveOperators().then((data) => {
+      setOperators(data);
+      setLoading(false);
+    });
   }, [router]);
 
   if (loading) {
@@ -40,7 +36,7 @@ export default function OperatorSelectionPage() {
     <div className="flex h-dvh flex-col bg-slate-950 pt-safe">
       <header className="px-6 pb-4 pt-8">
         <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
-          IPI Packers
+          FloorOps
         </p>
         <h1 className="mt-1 text-2xl font-bold text-white">Who are you?</h1>
       </header>

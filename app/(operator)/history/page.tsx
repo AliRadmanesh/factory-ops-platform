@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getSession } from "@/lib/session";
-import { supabase } from "@/lib/supabase/client";
+import { getJobHistory } from "@/app/actions/data";
 
 interface HistoryRow {
   id: string;
@@ -29,18 +29,10 @@ export default function HistoryPage() {
   useEffect(() => {
     const s = getSession();
     if (!s) { router.replace("/"); return; }
-
-    supabase
-      .from("job_logs")
-      .select("id, start_time, end_time, parts_completed, work_orders(job_number, product_name)")
-      .eq("operator_id", s.id)
-      .eq("status", "completed")
-      .order("end_time", { ascending: false })
-      .limit(5)
-      .then(({ data }) => {
-        setRows((data ?? []) as unknown as HistoryRow[]);
-        setLoading(false);
-      });
+    getJobHistory(s.id).then((data) => {
+      setRows(data);
+      setLoading(false);
+    });
   }, [router]);
 
   if (loading) {
