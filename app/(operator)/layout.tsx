@@ -12,7 +12,9 @@ export default function OperatorLayout({ children }: { children: React.ReactNode
     <div className="flex h-dvh flex-col overflow-hidden bg-slate-950">
       <OfflineBanner />
       <ActiveJobBanner />
-      <main className="flex-1 overflow-y-auto">{children}</main>
+      <main className="flex-1 overflow-y-auto">
+        <div className="mx-auto w-full max-w-3xl">{children}</div>
+      </main>
       <OperatorNav />
     </div>
   );

@@ -34,30 +34,32 @@ export default function OperatorSelectionPage() {
 
   return (
     <div className="flex h-dvh flex-col bg-slate-950 pt-safe">
-      <header className="px-6 pb-4 pt-8">
-        <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
-          FloorOps
-        </p>
-        <h1 className="mt-1 text-2xl font-bold text-white">Who are you?</h1>
-      </header>
+      <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col overflow-hidden">
+        <header className="px-6 pb-4 pt-8">
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
+            FloorOps
+          </p>
+          <h1 className="mt-1 text-2xl font-bold text-white">Who are you?</h1>
+        </header>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-8">
-        {operators.length === 0 ? (
-          <p className="mt-8 text-center text-slate-400">No operators available.</p>
-        ) : (
-          <ul className="space-y-2">
-            {operators.map((op) => (
-              <li key={op.id}>
-                <button
-                  onClick={() => router.push(`/auth?operator=${op.id}`)}
-                  className="flex min-h-16 w-full items-center rounded-xl bg-slate-800 px-5 text-left active:bg-slate-700"
-                >
-                  <span className="text-lg font-medium text-white">{op.name}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+        <div className="flex-1 overflow-y-auto px-4 pb-8">
+          {operators.length === 0 ? (
+            <p className="mt-8 text-center text-slate-400">No operators available.</p>
+          ) : (
+            <ul className="space-y-2">
+              {operators.map((op) => (
+                <li key={op.id}>
+                  <button
+                    onClick={() => router.push(`/auth?operator=${op.id}`)}
+                    className="flex min-h-16 w-full items-center rounded-xl bg-slate-800 px-5 text-left active:bg-slate-700"
+                  >
+                    <span className="text-lg font-medium text-white">{op.name}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );

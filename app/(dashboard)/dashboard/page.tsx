@@ -66,11 +66,11 @@ export default async function DashboardPage() {
   const { activeJobs, stats, sectionProgress } = await getDashboardData();
 
   return (
-    <div className="p-6 lg:p-8">
-      <div className="mb-8 flex items-end justify-between">
+    <div className="p-4 md:p-6 lg:p-8">
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-2 md:mb-8">
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">FloorOps</p>
-          <h1 className="mt-1 text-2xl font-bold text-white">Production Overview</h1>
+          <h1 className="mt-1 text-xl font-bold text-white sm:text-2xl">Production Overview</h1>
         </div>
         <p className="text-sm text-slate-500">
           {new Date().toLocaleDateString("en-AU", {
